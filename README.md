@@ -1,30 +1,18 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+TODO:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[ ] - Displaying random text to screen (Getting text from api?)
 
-## Expanding the ESLint configuration
+[ ] - Get input from keyboard
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+[ ] - Compare Letter to text
 
-- Configure the top-level `parserOptions` property like this:
+[ ] - display at the same place the input and the text to write 
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) `Red text for Wrong Text`
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+![#c5f015](https://placehold.co/15x15/c5f015/c5f015.png) `Green Text for Right Answer`
+
+
+[ ] - Calculate WPM (Word per minutes)
