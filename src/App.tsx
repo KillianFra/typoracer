@@ -1,12 +1,10 @@
 import DisplayText from "./Components/DisplayText";
-import Input from "./Components/Input";
 
 function App() {
 
   return (
-    <div className="flex flex-col h-screen w-screen justify-center items-center bg-[#070402]">
+    <div className="flex flex-col gap-10 h-screen w-screen justify-center items-center bg-[#1d1d1d]">
         <DisplayText />
-        <Input />
     </div>
   );
 }
