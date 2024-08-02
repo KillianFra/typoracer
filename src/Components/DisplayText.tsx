@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
 import { getRandomWordsFromFile } from "../Utils/getRandomWordsList";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
 
 export default function DisplayText() {
   const [index, setIndex] = useState(0);
@@ -8,40 +16,37 @@ export default function DisplayText() {
   const [milliseconds, setMilliseconds] = useState<number>(0);
   const [isActive, setIsActive] = useState<boolean>(false);
   const [startTime, setStartTime] = useState<number>(0);
-  const [done, setDone] = useState<boolean>(false)
-  function handleClick(e: KeyboardEvent) {
-    // Start the timer if it's the 1st time a letter is pressed
+  const [done, setDone] = useState<boolean>(false);
 
-    if (document.getElementById(`letter-${index}`) == null) {
-      setDone(true)
+  function handleClick(e: KeyboardEvent) {
+    if (done) return; // Stop further input if done
+
+    if (!isActive) {
+      setIsActive(true);
+      setStartTime(Date.now());
     }
 
-
     if (e.key === "Backspace") {
-      
-      if (!isActive) {
-        setIsActive(true);
-        setStartTime(Date.now());
-      }
-
-      // Reset the Letter
       setIndex((prevIndex) => {
-        const lastLetterElement = document.getElementById(
-          `letter-${prevIndex - 1 < 0 ? 0 : prevIndex - 1}`
-        );
-        lastLetterElement?.classList.remove("text-green-500");
-        lastLetterElement?.classList.remove("text-red-500");
+        if (prevIndex > 0) {
+          const lastLetterElement = document.getElementById(
+            `letter-${prevIndex - 1}`
+          );
+          lastLetterElement?.classList.remove("text-green-500");
+          lastLetterElement?.classList.remove("text-red-500");
 
-        const currentLetterElement = document.getElementById(
-          `letter-${prevIndex}`
-        );
-        currentLetterElement?.classList.remove("underline");
-        return prevIndex > 0 ? prevIndex - 1 : 0;
+          const currentLetterElement = document.getElementById(
+            `letter-${prevIndex}`
+          );
+          currentLetterElement?.classList.remove("underline");
+
+          return prevIndex - 1;
+        }
+        return 0;
       });
       return;
     }
 
-    // Ensure the key is a printable character
     if (e.key.length === 1) {
       setIndex((prevIndex) => {
         const currentLetterElement = document.getElementById(
@@ -54,6 +59,13 @@ export default function DisplayText() {
             currentLetterElement.classList.add("text-red-500");
           }
         }
+        console.log()
+        if (!document.getElementById(`letter-${prevIndex+1}`)) {
+          setIsActive(false)
+          setDone(true);
+          return prevIndex;
+        }
+
         return prevIndex + 1;
       });
     }
@@ -92,7 +104,6 @@ export default function DisplayText() {
     }
   }, [index, text]);
 
-  // Handle the click of the user
   useEffect(() => {
     window.addEventListener("keydown", handleClick);
     return () => {
@@ -102,6 +113,18 @@ export default function DisplayText() {
 
   return (
     <>
+      {done ? (
+        <Dialog defaultOpen={true}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Finished!</DialogTitle>
+              <DialogDescription>
+                You have completed the typing test.
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
+      ) : null}
       <div className="text-white text-2xl">
         {seconds}:{milliseconds}
       </div>
