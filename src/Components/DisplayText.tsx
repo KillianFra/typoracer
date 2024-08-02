@@ -4,10 +4,13 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
+import { Button } from "./ui/button";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 export default function DisplayText() {
   const [index, setIndex] = useState(0);
@@ -59,9 +62,9 @@ export default function DisplayText() {
             currentLetterElement.classList.add("text-red-500");
           }
         }
-        console.log()
-        if (!document.getElementById(`letter-${prevIndex+1}`)) {
-          setIsActive(false)
+        console.log();
+        if (!document.getElementById(`letter-${prevIndex + 1}`)) {
+          setIsActive(false);
           setDone(true);
           return prevIndex;
         }
@@ -111,16 +114,37 @@ export default function DisplayText() {
     };
   }, []);
 
+  function calculateWMP() {
+    return <div>{(index / 5)} WPM</div>
+  }
+
   return (
     <>
       {done ? (
         <Dialog defaultOpen={true}>
-          <DialogContent>
+          <DialogContent className="bg-white">
             <DialogHeader>
-              <DialogTitle>Finished!</DialogTitle>
-              <DialogDescription>
-                You have completed the typing test.
+              <DialogTitle>You've done the Typing Test !</DialogTitle>
+              <DialogDescription className="text-xl">
+                {calculateWMP()}
               </DialogDescription>
+              <DialogFooter className="flex justify-between">
+                <Button
+                  className="rounded-full bg-green-500 text-white font-semibold hover:bg-green-700"
+                  onClick={() => {
+                    location.reload();
+                  }}
+                >
+                  Try Again
+                </Button>
+                <DialogClose>
+                  <Button
+                    className="rounded-full bg-red-500 text-white font-semibold hover:bg-red-700"
+                  >
+                    Close
+                  </Button>
+                </DialogClose>
+              </DialogFooter>
             </DialogHeader>
           </DialogContent>
         </Dialog>
